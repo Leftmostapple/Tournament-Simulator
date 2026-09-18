@@ -1,11 +1,13 @@
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 import java.util.Scanner;
-import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-        Random random = new Random();
+        final String GREEN = "\u001B[38;2;144;238;144m";
+        final String CHAMPION = "\u001B[1;4;38;2;255;215;80m";
+        final String RED = "\u001B[38;5;203m";
+        final String RESET = "\u001B[0m";
         Scanner input = new Scanner(System.in);
 
         boolean gameCondition = false;
@@ -23,27 +25,64 @@ public class Main {
             if (gameCondition) {
                 Player[] players = new Player[numPlayers];
 
-                for (int plyGen = 0; plyGen < numPlayers; plyGen++) {
+                nameAllPlayers(players);
 
-                    players[plyGen] = new Player(0, 0);
+                int round = 1;
+                System.out.println(GREEN + "Round " + round + RESET + "\n----------");
+                round += 1;
 
-                    System.out.println(players[plyGen].getFullName()
-                            + "\n Health: " + players[plyGen].getHealth()
-                            + "\n Strength: " + players[plyGen].getStrength()
-                            + "\n Intellect: " + players[plyGen].getIntellect()
-                            + "\n Experience: " + players[plyGen].getExperience() + "\n");
-                }
+                System.out.println(RED + "Type Anything to move onto results" + RESET);
+                input.next();
+                clearConsole();
+                System.out.flush();
+
                 RoundHandler newTournament = new RoundHandler(players);
                 Player[] winnersFirstRound = newTournament.startRound();
 
+                for(int i = 0; i < winnersFirstRound.length; i++){
+                    winnersFirstRound[i].enhancePlayer(winnersFirstRound[i]);
+                }
+
                 while(winnersFirstRound.length != 1) {
+                    System.out.println(GREEN + "\n\nRound " + round + RESET + "\n----------");
+                    round += 1;
+
                     RoundHandler nextRound = new RoundHandler(winnersFirstRound);
                     winnersFirstRound = nextRound.startRound();
+
+
+                    if(winnersFirstRound.length != 1) {
+                        for (int i = 0; i < winnersFirstRound.length; i++) {
+                            winnersFirstRound[i].enhancePlayer(winnersFirstRound[i]);
+                        }
                     }
-                System.out.println(winnersFirstRound[0].getFullName() + " is the Champion!");
+
+                    }
+                System.out.println(CHAMPION + winnersFirstRound[0].getFullName() + " is the Champion!");
                 }
 
                 gameCondition = true;
+            }
+        }
+
+        public static void nameAllPlayers(Player[] playerList){
+            int numPlayers = playerList.length;
+
+            for (int plyGen = 0; plyGen < numPlayers; plyGen++) {
+
+                playerList[plyGen] = new Player();
+
+                System.out.println(playerList[plyGen].getFullName()
+                        + "\n Health: " + playerList[plyGen].getHealth()
+                        + "\n Strength: " + playerList[plyGen].getStrength()
+                        + "\n Intellect: " + playerList[plyGen].getIntellect()
+                        + "\n Experience: " + playerList[plyGen].getExperience() + "\n");
+            }
+        }
+
+        public static void clearConsole(){
+            for(int i = 0; i < 30; i++){
+                System.out.println();
             }
         }
     }
