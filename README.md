@@ -1,11 +1,16 @@
 # Tournament-Simulator
-Java Tournament Simulation Project where it randomly generates the selected amount of players to compete through eliminations until 1 remains.
+A Java console-based tournament simulation that generates players, assigns randomized attributes, simulates probability-based matches, improves surviving players between rounds, and continues until only one reamins.
 
 My second personal project after building tic-tac-toe and learning classes and objects 
+
 ## Current Features
 - Generates up to 64 players
 - Randomly assigns names and attributes
+- Calculates win probabilities based on player attributes
+- Uses randomized probability rolls to determine winners
 - Advances winners through multiple rounds
+- Improves surviving players after each round
+- Allows user input to control progression through matches and reults
 
 ## Player Attributes
 Players currently have attributes including: 
@@ -15,7 +20,7 @@ Players currently have attributes including:
 - Intellect
 - Experience
 
-(Attributes currently only add up to calculate the winners, this will be changed in the future)
+These attributes influence each player's probability of winning a match
 
 ## How to Run 
 
